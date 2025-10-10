@@ -27,6 +27,7 @@ import { configuration } from './config';
 import messages from './i18n';
 
 import App from './App';
+import ProgramDashboard from './containers/ProgramDashboard';
 import NoticesWrapper from './components/NoticesWrapper';
 
 subscribe(APP_READY, () => {
@@ -38,6 +39,7 @@ subscribe(APP_READY, () => {
         <NoticesWrapper>
           <Routes>
             <Route path="/" element={<PageWrap><App /></PageWrap>} />
+            <Route path="/programs" element={<PageWrap><ProgramDashboard /></PageWrap>} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </NoticesWrapper>
