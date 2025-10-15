@@ -19,6 +19,7 @@ import {
   APP_INIT_ERROR,
   initialize,
   subscribe,
+  getConfig,
   mergeConfig,
 } from '@edx/frontend-platform';
 
@@ -39,7 +40,9 @@ subscribe(APP_READY, () => {
         <NoticesWrapper>
           <Routes>
             <Route path="/" element={<PageWrap><App /></PageWrap>} />
-            <Route path="/programs" element={<PageWrap><ProgramDashboard /></PageWrap>} />
+            {getConfig().ENABLE_PROGRAM_DASHBOARD && (
+              <Route path="/programs" element={<PageWrap><ProgramDashboard /></PageWrap>} />
+            )}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </NoticesWrapper>
