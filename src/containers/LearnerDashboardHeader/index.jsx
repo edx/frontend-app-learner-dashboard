@@ -5,6 +5,7 @@ import { AppContext } from '@edx/frontend-platform/react';
 import Header from '@edx/frontend-component-header';
 import { reduxHooks } from 'hooks';
 import urls from 'data/services/lms/urls';
+import { getConfig } from '@edx/frontend-platform';
 
 import ConfirmEmailBanner from './ConfirmEmailBanner';
 
@@ -15,6 +16,8 @@ import './index.scss';
 export const LearnerDashboardHeader = () => {
   const { authenticatedUser } = React.useContext(AppContext);
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
+
+  console.log(getConfig().ENABLE_PROGRAMS);
 
   const exploreCoursesClick = () => {
     findCoursesNavClicked(urls.baseAppUrl(courseSearchUrl));

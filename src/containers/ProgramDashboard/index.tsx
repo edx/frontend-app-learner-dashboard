@@ -1,10 +1,19 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { logError } from '@edx/frontend-platform/logging';
+import { getProgramsListData } from './api';
 
 const ProgramDashboard = () => {
-  console.log('hello');
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    getProgramsListData()
+      .then(responseData => setData(responseData))
+      .catch(err => logError(err));
+  }, []);
+
   return (
     <div>
-      world
+      {JSON.stringify(data)}
     </div>
   );
 };
