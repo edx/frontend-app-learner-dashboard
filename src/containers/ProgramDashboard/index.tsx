@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { logError } from '@edx/frontend-platform/logging';
 import { getProgramsListData } from './api';
 
@@ -21,13 +22,18 @@ const ProgramDashboard = () => {
   }, []);
 
   return (
-    <div>
-      {programsData.map(item => (
-        <div>
-          {item.title}
-        </div>
-      ))}
-    </div>
+    <>
+      <Helmet>
+        <title>Program Dashboard</title>
+      </Helmet>
+      <div>
+        {programsData.map(item => (
+          <div>
+            {item.title}
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

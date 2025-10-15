@@ -22,14 +22,16 @@ import {
   getConfig,
   mergeConfig,
 } from '@edx/frontend-platform';
+import { FooterSlot } from '@edx/frontend-component-footer';
+
+import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
+import ProgramDashboard from './containers/ProgramDashboard';
 
 import { configuration } from './config';
 
 import messages from './i18n';
 
 import App from './App';
-import ProgramDashboard from './containers/ProgramDashboard';
-import NoticesWrapper from './components/NoticesWrapper';
 
 subscribe(APP_READY, () => {
   const root = createRoot(document.getElementById('root'));
@@ -37,15 +39,15 @@ subscribe(APP_READY, () => {
   root.render(
     <StrictMode>
       <AppProvider store={store}>
-        <NoticesWrapper>
-          <Routes>
-            <Route path="/" element={<PageWrap><App /></PageWrap>} />
-            {getConfig().ENABLE_PROGRAM_DASHBOARD && (
-              <Route path="/programs" element={<PageWrap><ProgramDashboard /></PageWrap>} />
-            )}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </NoticesWrapper>
+        <LearnerDashboardHeader />
+        <Routes>
+          <Route path="/" element={<PageWrap><App /></PageWrap>} />
+          {getConfig().ENABLE_PROGRAM_DASHBOARD && (
+            <Route path="/programs" element={<PageWrap><ProgramDashboard /></PageWrap>} />
+          )}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        <FooterSlot />
       </AppProvider>
     </StrictMode>,
   );
