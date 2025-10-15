@@ -35,7 +35,9 @@ jest.mock('@edx/frontend-platform', () => ({
 
 jest.mock('data/store', () => ({ redux: 'store' }));
 jest.mock('./App', () => 'App');
-jest.mock('components/NoticesWrapper', () => 'NoticesWrapper');
+jest.mock('@edx/frontend-component-footer', () => ({
+  FooterSlot: jest.fn(() => <div>FooterSlot</div>),
+}));
 
 describe('app registry', () => {
   let getElement;
