@@ -5,7 +5,7 @@ import 'regenerator-runtime/runtime';
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  Route, Navigate, Routes,
+  Navigate, Route, Routes,
 } from 'react-router-dom';
 
 import {
@@ -25,7 +25,7 @@ import {
 import { FooterSlot } from '@edx/frontend-component-footer';
 
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
-import ProgramDashboard from './containers/ProgramDashboard';
+import { ProgramsList } from 'containers/ProgramDashboard';
 
 import { configuration } from './config';
 
@@ -43,7 +43,10 @@ subscribe(APP_READY, () => {
         <Routes>
           <Route path="/" element={<PageWrap><App /></PageWrap>} />
           {getConfig().ENABLE_PROGRAM_DASHBOARD && (
-            <Route path="/programs" element={<PageWrap><ProgramDashboard /></PageWrap>} />
+            <>
+              <Route path="programs" element={<PageWrap><ProgramsList /></PageWrap>} />
+              <Route path="programs/:uuid" element={<div>program details page</div>} />
+            </>
           )}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
