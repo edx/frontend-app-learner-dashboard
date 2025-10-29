@@ -26,6 +26,7 @@ const ProgramsList: React.FC = () => {
         setProgramsData(camelCaseObject(responseData.data));
       })
       .catch(err => logError(err));
+    // TODO: add error handling alert component
   }, []);
 
   return (
