@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, RenderResult } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import ProgramListCard from './ProgramListCard';
 import { ProgramData } from '../data/types';
@@ -18,7 +18,13 @@ const mockBaseProgram = {
     large: { url: 'banner-large.jpg', width: 1440, height: 480 },
   },
   authoringOrganizations: [
-    { key: 'test-key', logoImageUrl: 'test-logo.png' },
+    {
+      uuid: 'org-uuid-1',
+      key: 'test-key',
+      name: 'test-org-1',
+      logoImageUrl: 'test-logo.png',
+      certificateLogoImageUrl: 'test-cert-logo.png',
+    },
   ],
   progress: {
     inProgress: 1,
@@ -30,13 +36,25 @@ const mockBaseProgram = {
 const mockMultipleOrgProgram = {
   ...mockBaseProgram,
   authoringOrganizations: [
-    { key: 'MIT', logoImageUrl: 'mit-logo.png' },
-    { key: 'HU', logoImageUrl: 'harvard-logo.png' },
+    {
+      uuid: 'org-uuid-1',
+      name: 'MIT',
+      key: 'MITx',
+      logoImageUrl: 'mit-logo.png',
+      certificateLogoImageUrl: 'mit-cert-logo-1.png',
+    },
+    {
+      uuid: 'org-uuid-2',
+      name: 'Harvard',
+      key: 'Harvardx',
+      logoImageUrl: 'harvard-logo.png',
+      certificateLogoImageUrl: 'harvard-cert-logo-2.png',
+    },
   ],
 };
 
 describe('ProgramListCard', () => {
-  const renderComponent = (programData: ProgramData = mockBaseProgram) => render(
+  const renderComponent = (programData: ProgramData = mockBaseProgram): RenderResult => render(
     <IntlProvider>
       <ProgramListCard program={programData} />
     </IntlProvider>,

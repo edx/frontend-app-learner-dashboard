@@ -20,8 +20,11 @@ export interface ImageData {
 }
 
 export interface AuthoringOrganization {
+  uuid: string,
   key: string,
+  name: string,
   logoImageUrl: string,
+  certificateLogoImageUrl: string | null,
 }
 
 export interface Progress {

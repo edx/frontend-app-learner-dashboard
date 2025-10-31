@@ -11,6 +11,8 @@ import ProgramProgressHeader from './ProgramProgressHeader';
 import ProgramProgressSidebar from './ProgramProgressSidebar';
 import ProgramProgressInfo from './ProgramProgressInfo';
 
+import './index.scss';
+
 const ProgramProgress: React.FC = () => {
   const [programProgressData, setProgramProgressData] = useState<ProgramProgressData>();
   const [programProgressEndpointError, setProgramProgressEndpointError] = useState(false);
@@ -57,21 +59,21 @@ const ProgramProgress: React.FC = () => {
   return (
     <>
       <Helmet title={`${programData.title}`} />
-      <Container>
+      <Container fluid={false} size="lg" className="p-4.5">
         <ProgramProgressHeader
           programTitle={programData?.title}
           programType={programData?.type}
           authoringOrganizations={programData?.authoringOrganizations}
         />
         <Row>
-          <Col>
+          <Col sm={12} md={8} className="px-4.5">
             <ProgramProgressInfo
               allCoursesCompleted={allCoursesCompleted}
               totalCoursesInProgram={totalCoursesInProgram}
             />
             <ProgramProgressCourses courseData={courseData} />
           </Col>
-          <Col>
+          <Col sm={12} md={4}>
             <ProgramProgressSidebar />
           </Col>
         </Row>
