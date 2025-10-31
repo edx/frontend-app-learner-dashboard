@@ -25,7 +25,7 @@ import {
 import { FooterSlot } from '@edx/frontend-component-footer';
 
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
-import { ProgramsList } from 'containers/ProgramDashboard';
+import { ProgramsList, ProgramProgress } from 'containers/ProgramDashboard';
 
 import { configuration } from './config';
 
@@ -45,7 +45,7 @@ subscribe(APP_READY, () => {
           {getConfig().ENABLE_PROGRAM_DASHBOARD && (
             <>
               <Route path="programs" element={<PageWrap><ProgramsList /></PageWrap>} />
-              <Route path="programs/:uuid" element={<div>program details page</div>} />
+              <Route path="programs/:uuid" element={<PageWrap><ProgramProgress /></PageWrap>} />
             </>
           )}
           <Route path="*" element={<Navigate to="/" replace />} />
