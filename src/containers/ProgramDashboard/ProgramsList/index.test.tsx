@@ -43,7 +43,7 @@ describe('ProgramsList', () => {
   });
 
   const renderComponent = () => render(
-    <IntlProvider>
+    <IntlProvider locale="en">
       <ProgramsList />
     </IntlProvider>,
   );

@@ -31,6 +31,7 @@ const mockBaseProgram = {
     notStarted: 2,
     completed: 3,
   },
+  discountData: {},
 };
 
 const mockMultipleOrgProgram = {
@@ -55,7 +56,7 @@ const mockMultipleOrgProgram = {
 
 describe('ProgramListCard', () => {
   const renderComponent = (programData: ProgramData = mockBaseProgram): RenderResult => render(
-    <IntlProvider>
+    <IntlProvider locale="en">
       <ProgramListCard program={programData} />
     </IntlProvider>,
   );

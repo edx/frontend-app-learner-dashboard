@@ -29,6 +29,7 @@ const ProgramsList: React.FC = () => {
     // TODO: add error handling alert component
   }, []);
 
+  // TODO: add handling of no programs data
   return (
     <>
       <Helmet>
@@ -36,11 +37,11 @@ const ProgramsList: React.FC = () => {
           {formatMessage(messages.programDashboardPageTitle)}
         </title>
       </Helmet>
-      <Container className="p-4.5">
+      <Container size="lg" className="p-4.5">
         <div className="h2">
           {formatMessage(messages.programsListHeaderText)}
         </div>
-        <Row className="py-3 gap-2">
+        <Row className="py-3">
           <Col sm={12} md={9}>
             <CardGrid columnSizes={{ xs: 12, lg: 6 }}>
               {programsData.map(program => (

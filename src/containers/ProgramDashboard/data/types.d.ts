@@ -11,6 +11,7 @@ export interface ProgramData {
   },
   authoringOrganizations?: AuthoringOrganization[],
   progress: Progress,
+  discountData: any,
 }
 
 export interface ImageData {
@@ -40,11 +41,11 @@ export interface ProgramCardProps {
 // Program Progress types
 export interface ProgramProgressData {
   urls: {
-    program_listing_url: string | null,
-    track_selection_url: string | null,
-    commerce_api_url: string | null,
-    buy_button_url: string | null,
-    program_record_url: string | null
+    programListingUrl: string | undefined,
+    trackSelectionUrl: string | undefined,
+    commerceApiUrl: string | undefined,
+    buyButtonUrl: string | undefined,
+    programRecordUrl: string | undefined
   },
   courseData: any,
   programData: any

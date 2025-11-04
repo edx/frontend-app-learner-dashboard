@@ -4,13 +4,17 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import ProgramProgressInfo from './ProgramProgressInfo';
 import messages from './messages';
 
+jest.mock('./UpgradeButton', () => ({
+  UpgradeAllButton: 'UpgradeAllButton',
+}));
+
 const defaultProps = {
   allCoursesCompleted: true,
   totalCoursesInProgram: 3,
 };
 
 const renderComponent = (props = {}): RenderResult => render(
-  <IntlProvider>
+  <IntlProvider locale="en">
     <ProgramProgressInfo {...defaultProps} {...props} />
   </IntlProvider>,
 );

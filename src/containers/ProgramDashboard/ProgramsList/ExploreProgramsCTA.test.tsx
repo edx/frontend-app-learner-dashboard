@@ -18,7 +18,7 @@ describe('ExploreProgramsCTA', () => {
   });
 
   const renderComponent = () => render(
-    <IntlProvider>
+    <IntlProvider locale="en">
       <ExploreProgramsCTA />
     </IntlProvider>,
   );

@@ -12,7 +12,7 @@ const messages = defineMessages({
     description: 'Header text for the programs list',
   },
   exploreCoursesCTAText: {
-    defaultMessage: 'Browse recently launched courses and see what&apos;s new in your favorite subjects',
+    defaultMessage: 'Browse recently launched courses and see what\'s new in your favorite subjects',
     id: 'explore.courses.cta.text',
     description: 'Call-to-action text for the explore courses component',
   },

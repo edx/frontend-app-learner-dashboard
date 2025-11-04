@@ -39,7 +39,7 @@ const renderComponent = (props = {}): RenderResult => {
   (getProgramIcon as jest.Mock).mockReturnValue(mockProgramIconUrl);
 
   return render(
-    <IntlProvider>
+    <IntlProvider locale="en">
       <ProgramProgressHeader {...defaultProps} {...props} />;
     </IntlProvider>,
   );
