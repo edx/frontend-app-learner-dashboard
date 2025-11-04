@@ -5,8 +5,6 @@ import messages from './messages';
 import './index.scss';
 import { ProgramProgressContext, ProgramProgressContextValueType } from '../ProgramProgressProvider.tsx';
 
-// TODO: review and write tests for this
-
 const UpgradeAllButton: React.FC = () => {
   const { formatMessage } = useIntl();
   const { programProgressData } = useContext<ProgramProgressContextValueType>(ProgramProgressContext);
