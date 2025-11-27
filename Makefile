@@ -12,6 +12,10 @@ transifex_temp = ./temp/babel-plugin-formatjs
 
 NPM_TESTS=build i18n_extract lint test
 
+# Extra translation sources for plugin-specific strings
+ATLAS_EXTRA_SOURCES = translations/frontend-plugin-learner-dashboard/src/i18n/messages:frontend-plugin-learner-dashboard
+ATLAS_OPTIONS = --repository=edx/openedx-translations
+
 .PHONY: test
 test: $(addprefix test.npm.,$(NPM_TESTS))  ## validate ci suite
 
@@ -48,9 +52,10 @@ pull_translations:
                translations/frontend-platform/src/i18n/messages:frontend-platform \
                translations/paragon/src/i18n/messages:paragon \
                translations/frontend-component-footer/src/i18n/messages:frontend-component-footer \
-               translations/frontend-app-learner-dashboard/src/i18n/messages:frontend-app-learner-dashboard
+               translations/frontend-app-learner-dashboard/src/i18n/messages:frontend-app-learner-dashboard \
+               $(ATLAS_EXTRA_SOURCES)
 
-	$(intl_imports) frontend-platform paragon frontend-component-footer frontend-app-learner-dashboard
+	$(intl_imports) frontend-platform paragon frontend-component-footer frontend-app-learner-dashboard frontend-plugin-learner-dashboard
 
 # This target is used by CI.
 validate-no-uncommitted-package-lock-changes:
