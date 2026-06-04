@@ -25,8 +25,15 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
+      
+      - name: Test
+        run: npm run test
+ 
+      - name: Build
+        run: npm run build
+ 
       - name: Release to npm/Github
         run: npx semantic-release@25
         env:
-          GITHUB_TOKEN: ${{ secrets.OPENEDX_SEMANTIC_RELEASE_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN }}
