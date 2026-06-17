@@ -21,13 +21,13 @@ import {
   subscribe,
   mergeConfig,
 } from '@edx/frontend-platform';
+import { PPProvider } from '@edx/frontend-plugin-learner-dashboard';
 
 import { configuration } from './config';
 
 import messages from './i18n';
 
 import App from './App';
-import { PPProvider } from './ProgressiveProfilingPlugin/progressive-profiling';
 
 subscribe(APP_READY, () => {
   const root = createRoot(document.getElementById('root'));
@@ -38,7 +38,7 @@ subscribe(APP_READY, () => {
         <Routes>
           <Route path="/" element={<PageWrap><App /></PageWrap>} />
           <Route path="welcome" element={<PPProvider />} />
-          {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AppProvider>
     </StrictMode>,
