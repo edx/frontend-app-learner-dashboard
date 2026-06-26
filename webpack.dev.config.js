@@ -9,6 +9,14 @@ config.resolve.modules = [
   'node_modules',
 ];
 
+config.resolve.alias = {
+  ...(config.resolve.alias || {}),
+  'react': path.dirname(require.resolve('react/package.json')),
+  'react-dom': path.dirname(require.resolve('react-dom/package.json')),
+  'react/jsx-runtime': require.resolve('react/jsx-runtime'),
+  'react/jsx-dev-runtime': require.resolve('react/jsx-dev-runtime'),
+};
+
 config.module.rules[0].exclude = /node_modules\/(?!(split-on-first|strict-uri-encode|@edx))/;
 
 config.plugins.push(

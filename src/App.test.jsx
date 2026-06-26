@@ -37,6 +37,14 @@ jest.mock('@edx/frontend-platform/react', () => ({
   ErrorPage: () => 'ErrorPage',
 }));
 
+jest.mock('@edx/frontend-platform/auth', () => ({
+  getAuthenticatedHttpClient: jest.fn(() => ({})),
+}));
+
+jest.mock('@edx/frontend-plugin-learner-dashboard', () => ({
+  ProgressiveProfilingEntry: jest.fn(() => <div>ProgressiveProfilingEntry</div>),
+}));
+
 const loadData = jest.fn();
 reduxHooks.useLoadData.mockReturnValue(loadData);
 
@@ -56,7 +64,7 @@ describe('App router component', () => {
       it('wraps the header and main components in an AppWrapper widget container', () => {
         const appWrapper = screen.getByText('LearnerDashboardHeader').parentElement;
         expect(appWrapper).toHaveClass('AppWrapper');
-        expect(appWrapper.children[1].id).toEqual('main');
+        expect(appWrapper.children[2].id).toEqual('main');
       });
       it('displays footer slot', () => {
         const footerSlot = screen.getByText('FooterSlot');

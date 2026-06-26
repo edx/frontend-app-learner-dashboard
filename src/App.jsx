@@ -26,8 +26,11 @@ import AppWrapper from 'containers/AppWrapper';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 
 import { getConfig } from '@edx/frontend-platform';
-import messages from './messages';
 import './App.scss';
+import { ProgressiveProfilingEntry } from '@edx/frontend-plugin-learner-dashboard/';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
+import messages from './messages';
 
 export const App = () => {
   const { authenticatedUser } = React.useContext(AppContext);
@@ -71,6 +74,12 @@ export const App = () => {
       }
     }
   }, [authenticatedUser, loadData]);
+
+  /** Capturing Progressive Profiling events */
+  const debugTrack = (eventName, eventData) => {
+    sendTrackEvent(eventName, eventData);
+  };
+
   return (
     <>
       <Helmet>
@@ -79,6 +88,11 @@ export const App = () => {
       </Helmet>
       <div>
         <AppWrapper>
+          <ProgressiveProfilingEntry
+            trackEvent={debugTrack}
+            authenticatedUser={authenticatedUser}
+            client={getAuthenticatedHttpClient()}
+          />
           <LearnerDashboardHeader />
           <main id="main">
             {hasNetworkFailure

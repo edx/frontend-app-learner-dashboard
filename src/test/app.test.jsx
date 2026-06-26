@@ -70,6 +70,10 @@ jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-plugin-learner-dashboard', () => ({
+  ProgressiveProfilingEntry: jest.fn(() => <div>ProgressiveProfilingEntry</div>),
+}));
+
 jest.mock('utils/hooks', () => {
   const formatDate = jest.fn(date => `Date-${date}`);
   return {
