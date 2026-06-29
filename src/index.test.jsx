@@ -33,6 +33,10 @@ jest.mock('@edx/frontend-platform', () => ({
   subscribe: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-plugin-learner-dashboard', () => ({
+  ProgressiveProfiling: jest.fn(),
+}));
+
 jest.mock('data/store', () => ({ redux: 'store' }));
 jest.mock('./App', () => 'App');
 
