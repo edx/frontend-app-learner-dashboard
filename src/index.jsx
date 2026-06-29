@@ -21,7 +21,7 @@ import {
   subscribe,
   mergeConfig,
 } from '@edx/frontend-platform';
-import { PPProvider } from '@edx/frontend-plugin-learner-dashboard';
+import { ProgressiveProfiling } from '@edx/frontend-plugin-learner-dashboard';
 
 import { configuration } from './config';
 
@@ -37,7 +37,7 @@ subscribe(APP_READY, () => {
       <AppProvider store={store}>
         <Routes>
           <Route path="/" element={<PageWrap><App /></PageWrap>} />
-          <Route path="welcome" element={<PPProvider />} />
+          <Route path="welcome" element={<PageWrap><ProgressiveProfiling /></PageWrap>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AppProvider>
