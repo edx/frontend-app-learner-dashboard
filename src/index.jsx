@@ -37,7 +37,7 @@ subscribe(APP_READY, () => {
       <AppProvider store={store}>
         <Routes>
           <Route path="/" element={<PageWrap><App /></PageWrap>} />
-          <Route path="welcome" element={<PageWrap><ProgressiveProfiling /></PageWrap>} />
+          <Route path="/welcome" element={<PageWrap><ProgressiveProfiling /></PageWrap>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AppProvider>
