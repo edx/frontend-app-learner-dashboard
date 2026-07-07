@@ -38,7 +38,7 @@ subscribe(APP_READY, () => {
       <AppProvider store={store}>
         <Routes>
           <Route path="/" element={<PageWrap><App /></PageWrap>} />
-          {getConfig().ENABLE_PROGRESSIVE_PROFILING_PAGE && (
+          {getConfig()?.ENABLE_PROGRESSIVE_PROFILING_PAGE && (
             <Route path="/welcome" element={<PageWrap><ProgressiveProfiling /></PageWrap>} />
           )}
           <Route path="*" element={<Navigate to="/" replace />} />
