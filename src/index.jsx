@@ -20,6 +20,7 @@ import {
   initialize,
   subscribe,
   mergeConfig,
+  getConfig,
 } from '@edx/frontend-platform';
 import { ProgressiveProfiling } from '@edx/frontend-plugin-learner-dashboard';
 
@@ -37,7 +38,9 @@ subscribe(APP_READY, () => {
       <AppProvider store={store}>
         <Routes>
           <Route path="/" element={<PageWrap><App /></PageWrap>} />
-          <Route path="/welcome" element={<PageWrap><ProgressiveProfiling /></PageWrap>} />
+          {getConfig().ENABLE_PROGRESSIVE_PROFILING_PAGE && (
+            <Route path="/welcome" element={<PageWrap><ProgressiveProfiling /></PageWrap>} />
+          )}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AppProvider>
