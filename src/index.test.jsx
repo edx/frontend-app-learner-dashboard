@@ -25,6 +25,7 @@ jest.mock('react-dom/client', () => {
 });
 
 jest.mock('@edx/frontend-platform', () => ({
+  getConfig: jest.fn(),
   mergeConfig: jest.fn(),
   ensureConfig: jest.fn(),
   APP_READY: 'app-is-ready-key',
