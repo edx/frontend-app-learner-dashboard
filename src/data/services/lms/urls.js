@@ -31,6 +31,8 @@ export const creditPurchaseUrl = (courseId) => {
 };
 export const creditRequestUrl = (providerId) => `${getApiUrl()}/credit/v1/providers/${providerId}/request/`;
 
+export const getSubsInitApiUrl = () => (`${getApiUrl()}/subscription/init/`);
+
 export default StrictDict({
   getApiUrl,
   baseAppUrl,
