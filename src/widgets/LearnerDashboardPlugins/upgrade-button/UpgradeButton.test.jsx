@@ -23,6 +23,20 @@ jest.mock('./data/hooks', () => ({
   useIsCollapsed: jest.fn(() => false),
 }));
 
+jest.mock('@openedx/frontend-base', () => ({
+  defineMessages: (msgs) => msgs,
+  useIntl: () => ({
+    formatMessage: (
+      messageDescriptor,
+      values,
+    ) => {
+      const msg = messageDescriptor.defaultMessage || messageDescriptor.id || '';
+      if (!values) return msg;
+      return [msg, ...Object.values(values)];
+    },
+  }),
+}));
+
 describe('UpgradeButton', () => {
   const props = {
     cardId: 'cardId',
@@ -35,11 +49,16 @@ describe('UpgradeButton', () => {
     useCourseData.mockReturnValue({ courseRun: { upgradeUrl, org, title: courseName } });
   });
 
-  describe('snapshot', () => {
-    test('can upgrade', () => {
-      const wrapper = shallow(<UpgradeButton {...props} />);
-      expect(wrapper.snapshot).toMatchSnapshot();
-      expect(wrapper.instance.props.disabled).toEqual(false);
+  describe('render', () => {
+    it('can upgrade', () => {
+      render(<UpgradeButton {...props} />);
+
+      const button = screen.getByRole('link', { name: /upgrade/i });
+
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveAttribute('href', upgradeUrl);
+      expect(button).not.toHaveAttribute('disabled');
+
       expect(useCourseTrackingEvent).toHaveBeenCalledWith(
         upgradeClicked,
         props.cardId,
@@ -47,13 +66,18 @@ describe('UpgradeButton', () => {
         courseName,
         upgradeUrl,
       );
-      expect(wrapper.instance.props.onClick).toEqual(mockTrackUpgradeClick);
     });
-    test('cannot upgrade', () => {
-      useActionDisabledState.mockReturnValueOnce({ disableUpgradeCourse: true });
-      const wrapper = shallow(<UpgradeButton {...props} />);
-      expect(wrapper.snapshot).toMatchSnapshot();
-      expect(wrapper.instance.props.disabled).toEqual(true);
+
+    it('cannot upgrade', () => {
+      useActionDisabledState.mockReturnValue({
+        disableUpgradeCourse: true,
+      });
+
+      render(<UpgradeButton {...props} />);
+
+      const button = screen.getByRole('button', { name: /upgrade/i });
+
+      expect(button).toBeDisabled();
     });
   });
 });
