@@ -1,4 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
 import { useWindowSize, breakpoints } from '@openedx/paragon';
 import { useCourseData, useIsMasquerading } from '@src/hooks';
 

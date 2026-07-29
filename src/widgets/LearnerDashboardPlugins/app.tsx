@@ -1,4 +1,3 @@
-import React from 'react';
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
 import UpgradeButton from './upgrade-button/UpgradeButton';
 

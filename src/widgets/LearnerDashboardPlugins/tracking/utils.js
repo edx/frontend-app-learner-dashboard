@@ -36,5 +36,7 @@ export const createPageEventTracker = (name, options = null) => () => sendPageEv
 export const createLinkTracker = (tracker, href) => (e) => {
   e.preventDefault();
   tracker();
-  return setTimeout(() => { global.location.href = href; }, LINK_TIMEOUT);
+  return setTimeout(() => {
+    global.location.href = href;
+  }, LINK_TIMEOUT);
 };
