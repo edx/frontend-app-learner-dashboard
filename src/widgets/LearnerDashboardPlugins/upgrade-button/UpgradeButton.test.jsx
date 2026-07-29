@@ -1,6 +1,4 @@
-/* eslint-disable import/no-named-as-default-member */
-/* eslint-disable import/no-named-as-default */
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
 
 import { useCourseData, useCourseTrackingEvent } from '@src/hooks';
 import { useActionDisabledState } from './data/hooks';
@@ -41,12 +39,25 @@ describe('UpgradeButton', () => {
   const props = {
     cardId: 'cardId',
   };
+
   const upgradeUrl = 'upgradeUrl';
   const org = 'edX';
   const courseName = 'Demo Course';
 
   beforeEach(() => {
-    useCourseData.mockReturnValue({ courseRun: { upgradeUrl, org, title: courseName } });
+    jest.clearAllMocks();
+
+    useCourseData.mockReturnValue({
+      courseRun: {
+        upgradeUrl,
+        org,
+        title: courseName,
+      },
+    });
+
+    useActionDisabledState.mockReturnValue({
+      disableUpgradeCourse: false,
+    });
   });
 
   describe('render', () => {
