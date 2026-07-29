@@ -1,7 +1,7 @@
 import { useWindowSize, breakpoints } from '@openedx/paragon';
 import { useIsCollapsed } from './hooks';
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   useCourseData: jest.fn(),
   useIsMasquerading: jest.fn(),
 }), { virtual: true });

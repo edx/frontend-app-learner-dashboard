@@ -13,7 +13,7 @@ jest.mock('../tracking/trackers/upgradeButton', () => ({
   upgradeClicked: jest.fn().mockName('segment.trackUpgradeClicked'),
 }));
 
-jest.mock('hooks', () => ({
+jest.mock('@src/hooks', () => ({
   useCourseData: jest.fn(),
   useCourseTrackingEvent: jest.fn(() => mockTrackUpgradeClick),
 }), { virtual: true });
