@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`UpgradeButtonWrapper snapshot is not visible 1`] = `null`;
-
-exports[`UpgradeButtonWrapper snapshot is visible 1`] = `
-<UpgradeButton
-  cardId="cardId"
-/>
-`;

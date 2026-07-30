@@ -82,8 +82,7 @@
     "nodemon": "^3.1.14",
     "react-dev-utils": "^12.0.0",
     "tsc-alias": "^1.8.16",
-    "turbo": "^2.8.20",
-    "@edx/react-unit-test-utils": "^4.0.0"
+    "turbo": "^2.8.20"
   },
   "peerDependencies": {
     "@openedx/frontend-base": "^1.0.0-alpha || 0.0.0-dev",
