@@ -1,2 +1,2 @@
 export { default as UpgradeButton } from './upgrade-button';
-export { default } from './app';
+export { default as learnerDashboardPlugins } from './app';

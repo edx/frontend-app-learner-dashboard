@@ -1,23 +1,17 @@
-import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
+import { App, WidgetOperationTypes } from '@openedx/frontend-base';
+
 import UpgradeButton from './upgrade-button/UpgradeButton';
 
-const config = {
-  pluginSlots: {
-    'org.openedx.frontend.slot.learnerDashboard.courseCardAction.v1': {
-      keepDefault: false,
-      plugins: [
-        {
-          op: PLUGIN_OPERATIONS.Insert,
-          widget: {
-            id: 'org.openedx.frontend.slot.learnerDashboard.courseCardAction.v1',
-            type: DIRECT_PLUGIN,
-            priority: 60,
-            RenderWidget: UpgradeButton,
-          },
-        },
-      ],
+const app: App = {
+  appId: 'org.openedx.frontend.app.learnerDashboard.plugins',
+  slots: [
+    {
+      slotId: 'org.openedx.frontend.slot.learnerDashboard.courseCardAction.v1',
+      id: 'org.openedx.frontend.widget.learnerDashboard.upgradeButton.v1',
+      op: WidgetOperationTypes.PREPEND,
+      component: UpgradeButton,
     },
-  },
+  ],
 };
 
-export default config;
+export default app;
