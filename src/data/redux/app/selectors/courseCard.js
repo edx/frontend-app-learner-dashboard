@@ -46,6 +46,7 @@ export const courseCard = StrictDict({
       advertisedStart: courseRun.advertisedStart,
 
       courseId: courseRun.courseId,
+      courseUuid: courseRun.courseUuid,
       isArchived: courseRun.isArchived,
       isStarted: courseRun.isStarted,
 
