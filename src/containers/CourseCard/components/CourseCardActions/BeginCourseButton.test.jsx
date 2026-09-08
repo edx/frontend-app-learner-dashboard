@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import track from 'tracking';
 import { useCourseData, useCourseTrackingEvent } from 'hooks';
@@ -9,7 +8,7 @@ import BeginCourseButton from './BeginCourseButton';
 jest.mock('hooks', () => ({
   useCourseData: jest.fn().mockReturnValue({
     enrollment: { mode: 'executive-education' },
-    courseRun: { homeUrl: 'home-url' },
+    courseRun: { homeUrl: 'home-url', courseUuid: 'test-course-uuid' },
   }),
   useCourseTrackingEvent: jest.fn().mockReturnValue({
     trackCourseEvent: jest.fn(),
@@ -75,11 +74,20 @@ describe('BeginCourseButton', () => {
         expect(button).not.toHaveClass('disabled');
         expect(button).not.toHaveAttribute('aria-disabled', 'true');
       });
-      it('should track enter course clicked event on click, with exec ed param', () => {
+      it('tracks enter course clicked event with exec ed and course_id params', () => {
         renderComponent();
-        const user = userEvent.setup();
-        const button = screen.getByRole('button', { name: 'Begin Course' });
-        user.click(button);
+        expect(useCourseTrackingEvent).toHaveBeenCalledWith(
+          track.course.enterCourseClicked,
+          props.cardId,
+          `${homeUrl}?org_id=test-org-id&course_id=test-course-uuid`,
+        );
+      });
+      it('omits course_id if courseUuid is not available', () => {
+        useCourseData.mockReturnValueOnce({
+          enrollment: { mode: 'executive-education' },
+          courseRun: { homeUrl },
+        });
+        renderComponent();
         expect(useCourseTrackingEvent).toHaveBeenCalledWith(
           track.course.enterCourseClicked,
           props.cardId,
