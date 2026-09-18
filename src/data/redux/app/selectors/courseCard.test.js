@@ -150,6 +150,7 @@ describe('courseCard selectors module', () => {
           advertisedStart: 'Mid June',
 
           courseId: 'test-course-id',
+          courseUuid: 'test-course-uuid',
           isArchived: 'test-is-archived',
           isStarted: 'test-is-started',
 
@@ -176,8 +177,9 @@ describe('courseCard selectors module', () => {
       it('passes advertised start date', () => {
         expect(selected.advertisedStart).toEqual(testData.advertisedStart);
       });
-      it('passes [courseId, isArchived, isStarted]', () => {
+      it('passes [courseId, courseUuid, isArchived, isStarted]', () => {
         expect(selected.courseId).toEqual(testData.courseId);
+        expect(selected.courseUuid).toEqual(testData.courseUuid);
         expect(selected.isArchived).toEqual(testData.isArchived);
         expect(selected.isStarted).toEqual(testData.isStarted);
       });

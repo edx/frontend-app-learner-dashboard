@@ -57,8 +57,15 @@ export const useCardSocialSettingsData = (cardId) => {
 
 export const useCardExecEdTrackingParam = (cardId) => {
   const { isExecEd2UCourse } = module.useCardEnrollmentData(cardId);
+  if (!isExecEd2UCourse) { return ''; }
+
   const { authOrgId } = module.useEnterpriseDashboardData(cardId);
-  return isExecEd2UCourse ? `?org_id=${authOrgId}` : '';
+  const { courseUuid } = module.useCardCourseRunData(cardId);
+  const params = new URLSearchParams();
+  if (authOrgId) { params.set('org_id', authOrgId); }
+  if (courseUuid) { params.set('course_id', courseUuid); }
+  const query = params.toString();
+  return query ? `?${query}` : '';
 };
 
 /** Events **/
