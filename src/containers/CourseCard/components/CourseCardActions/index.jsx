@@ -15,7 +15,7 @@ export const CourseCardActions = ({ cardId }) => {
   const cardData = useCourseData(cardId);
   const hasStarted = cardData.enrollment.hasStarted || false;
   const { isEntitlement, isFulfilled } = useEntitlementInfo(cardData);
-  const isArchived = cardData.courseRun.isArchived || false;
+  const isArchived = cardData?.courseRun?.isArchived || false;
 
   return (
     <ActionRow data-test-id="CourseCardActions">
