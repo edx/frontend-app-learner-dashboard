@@ -13,6 +13,7 @@ const courseSearchUrl = '/course-search-url';
 jest.mock('hooks', () => ({
   reduxHooks: {
     useHasCourses: jest.fn(),
+    useRvPluginsData: jest.fn(() => ({ isEnabled: false })),
     usePlatformSettingsData: jest.fn(() => ({
       courseSearchUrl,
     })),
