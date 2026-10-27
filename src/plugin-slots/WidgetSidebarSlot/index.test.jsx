@@ -36,7 +36,7 @@ describe('WidgetSidebar', () => {
     reduxHooks.usePlatformSettingsData.mockReturnValueOnce({ courseSearchUrl });
     reduxHooks.useRvPluginsData.mockReturnValueOnce({ isEnabled: true });
     render(<IntlProvider locale="en"><WidgetSidebarSlot /></IntlProvider>);
-    expect(screen.getByText('Looking for a new challenge?')).toBeDefined();
+    expect(screen.queryByText('Looking for a new challenge?')).toBeNull();
     expect(PluginSlot).not.toHaveBeenCalled();
   });
 
