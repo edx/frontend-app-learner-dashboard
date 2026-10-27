@@ -23,6 +23,7 @@ describe('app simple selectors', () => {
     test.each([
       keys.courseData,
       keys.platformSettings,
+      keys.rvPlugins,
       keys.suggestedCourses,
       keys.emailConfirmation,
       keys.enterpriseDashboard,

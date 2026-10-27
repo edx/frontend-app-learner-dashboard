@@ -10,6 +10,7 @@ const mkSimpleSelector = (cb) => createSelector([module.appSelector], cb);
 export const simpleSelectors = StrictDict({
   courseData: mkSimpleSelector(app => app.courseData),
   platformSettings: mkSimpleSelector(app => app.platformSettings),
+  rvPlugins: mkSimpleSelector(app => app.rvPlugins),
   suggestedCourses: mkSimpleSelector(app => app.suggestedCourses),
   emailConfirmation: mkSimpleSelector(app => app.emailConfirmation),
   enterpriseDashboard: mkSimpleSelector(app => app.enterpriseDashboard || {}),

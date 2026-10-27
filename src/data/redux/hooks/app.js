@@ -13,6 +13,7 @@ export const useFilters = () => useSelector(selectors.filters);
 export const useEmailConfirmationData = () => useSelector(selectors.emailConfirmation);
 export const useEnterpriseDashboardData = () => useSelector(selectors.enterpriseDashboard);
 export const usePlatformSettingsData = () => useSelector(selectors.platformSettings);
+export const useRvPluginsData = () => useSelector(selectors.rvPlugins);
 export const useSelectSessionModalData = () => useSelector(selectors.selectSessionModal);
 export const useSocialShareSettings = () => useSelector(selectors.socialShareSettings);
 
