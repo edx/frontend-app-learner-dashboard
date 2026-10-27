@@ -10,15 +10,15 @@ export const useAccessMessage = ({ cardId }) => {
   const courseData = useCourseData(cardId);
   const { courseRun, enrollment } = courseData || {};
   const formatDate = utilHooks.useFormatDate();
-  if (!courseRun.isStarted) {
-    if (!courseRun.startDate && !courseRun.advertisedStart) {
+  if (!courseRun?.isStarted) {
+    if (!courseRun?.startDate) {
       return null;
     }
-    const startDate = courseRun.advertisedStart || formatDate(courseRun.startDate);
+    const startDate = courseRun?.advertisedStart || formatDate(courseRun?.startDate);
     return formatMessage(messages.courseStarts, { startDate });
   }
   if (enrollment?.isEnrolled) {
-    const { isArchived, endDate } = courseRun;
+    const { isArchived, endDate } = courseRun || {};
     const {
       accessExpirationDate,
       isAuditAccessExpired,
