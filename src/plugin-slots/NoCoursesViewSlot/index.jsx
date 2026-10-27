@@ -7,7 +7,7 @@ import NoCoursesView from 'containers/CoursesPanel/NoCoursesView';
 export const NoCoursesViewSlot = () => {
   const rvPlugins = reduxHooks.useRvPluginsData();
 
-  if (rvPlugins?.isEnabled) {
+  if (!rvPlugins || rvPlugins.isEnabled) {
     return null;
   }
 

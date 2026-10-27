@@ -8,7 +8,7 @@ import LookingForChallengeWidget from 'plugins/LookingForChallengeWidget';
 export const WidgetSidebarSlot = () => {
   const rvPlugins = reduxHooks.useRvPluginsData();
 
-  if (rvPlugins?.isEnabled) {
+  if (!rvPlugins || rvPlugins.isEnabled) {
     return null;
   }
 
