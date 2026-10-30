@@ -1,0 +1,105 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import { getAppConfig } from '@openedx/frontend-base';
+import { useIntl } from '@openedx/frontend-base';
+import { Hyperlink, Image } from '@openedx/paragon';
+import classNames from 'classnames';
+
+import messages from './messages';
+
+const LargeLayout = ({ enterpriseBranding }) => {
+  const { formatMessage } = useIntl();
+
+  const enterpriseLogoUrl = enterpriseBranding?.enterpriseLogoUrl || null;
+  const enterpriseName = enterpriseBranding?.enterpriseName || null;
+
+  const enterpriseWelcomeHtml = enterpriseBranding?.enterpriseBrandedWelcomeString
+    || enterpriseBranding?.platformWelcomeString
+    || '';
+
+  const siteName = getAppConfig().SITE_NAME;
+  const baseLogoSrc = getAppConfig().LOGO_WHITE_URL || getAppConfig().LOGO_URL;
+
+  return (
+    <div className="w-50 d-flex">
+      <div className="col-md-10 bg-primary-400 auth-hero-left position-relative">
+        {/* base edX logo at very top-left */}
+        <Hyperlink destination={getAppConfig().MARKETING_SITE_BASE_URL}>
+          <Image
+            className="welcome-page-logo auth-hero-base-logo"
+            alt={siteName}
+            src={baseLogoSrc}
+          />
+        </Hyperlink>
+
+        {/* main hero content block, aligned like Figma */}
+        <div className="auth-hero-content d-flex flex-column">
+          {/* row: [enterprise logo] [yellow slash] [Start learning with edX] */}
+          <div className="d-flex align-items-center">
+            {enterpriseLogoUrl && (
+              <div className="auth-hero-enterprise-logo-wrapper mr-4">
+                <Image
+                  alt={enterpriseName || 'Enterprise'}
+                  src={enterpriseLogoUrl}
+                  className="auth-hero-enterprise-logo"
+                />
+              </div>
+            )}
+
+            <div className="auth-hero-slash mr-4" aria-hidden="true" />
+
+            <div className="auth-hero-heading">
+              <div
+                className={classNames(
+                  'auth-hero-heading-line text-white',
+                )}
+              >
+                {formatMessage(messages['start.learning'])}
+              </div>
+              <div className="auth-hero-heading-line text-accent-a">
+                {formatMessage(messages['with.edx'])}
+              </div>
+            </div>
+          </div>
+
+          {/* enterprise-specific message aligned under heading */}
+          {enterpriseWelcomeHtml && (
+            <div
+              className="auth-hero-message mt-4"
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{ __html: enterpriseWelcomeHtml }}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* keep existing right decorative triangle */}
+      <div className="col-md-3 bg-white p-0">
+        <svg
+          className="m1-n1 w-100 h-100 large-screen-svg-primary"
+          preserveAspectRatio="xMaxYMin meet"
+        >
+          <g transform="skewX(171.6)">
+            <rect x="0" y="0" height="100%" width="100%" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  );
+};
+
+LargeLayout.propTypes = {
+  enterpriseBranding: PropTypes.shape({
+    enterpriseLogoUrl: PropTypes.string,
+    enterpriseName: PropTypes.string,
+    enterpriseBrandedWelcomeString: PropTypes.string,
+    platformWelcomeString: PropTypes.string,
+  }),
+};
+
+LargeLayout.defaultProps = {
+  enterpriseBranding: null,
+};
+
+export default LargeLayout;
