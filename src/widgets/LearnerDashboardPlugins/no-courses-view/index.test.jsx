@@ -1,17 +1,26 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { IntlProvider } from '@openedx/frontend-base';
-import { formatMessage } from '../testUtils';
-
 import EmptyCourse from '.';
 import messages from './messages';
-import { exploreCoursesViewedCohesion, exploreCoursesClickedCohesion } from '../tracking/trackers/exploreCourses';
+import {
+  exploreCoursesViewedCohesion,
+  exploreCoursesClickedCohesion,
+} from '../tracking/trackers/exploreCourses';
+import { formatMessage } from '@src/testUtils';
 
-const courseSearchUrl = '/course-search-url';
+const mockCourseSearchUrl = '/course-search-url';
+
+beforeAll(() => {
+  Object.defineProperty(window.crypto, 'randomUUID', {
+    configurable: true,
+    value: jest.fn(() => 'test-correlation-id'),
+  });
+});
 
 jest.mock('react-intersection-observer', () => ({
   useInView: jest.fn(() => ({
     ref: jest.fn(),
-    inView: jest.fn(),
+    inView: true,
   })),
 }));
 
@@ -19,15 +28,15 @@ jest.mock('@src/data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(() => ({
     data: {
       platformSettings: {
-        courseSearchUrl,
+        courseSearchUrl: mockCourseSearchUrl,
       },
     },
   })),
-}), { virtual: true });
+}));
 
-jest.mock('data/services/lms/urls', () => ({
+jest.mock('@src/data/services/lms/urls', () => ({
   baseAppUrl: (path) => `mock-base-app-url${path}`,
-}), { virtual: true });
+}));
 
 jest.mock('../tracking/trackers/exploreCourses', () => ({
   exploreCoursesViewedCohesion: jest.fn(),
@@ -35,32 +44,65 @@ jest.mock('../tracking/trackers/exploreCourses', () => ({
 }));
 
 describe('NoCoursesView', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should display image, heading and button', () => {
     render(<IntlProvider locale="en"><EmptyCourse /></IntlProvider>);
-    const image = screen.getByRole('img', { alt: formatMessage(messages.bannerAlt) });
+
+    const image = screen.getByRole('img', {
+      name: formatMessage(messages.bannerAlt),
+    });
+
     expect(image).toBeInTheDocument();
   });
+
   it('should display heading and prompt', () => {
     render(<IntlProvider locale="en"><EmptyCourse /></IntlProvider>);
-    const heading = screen.getByText(formatMessage(messages.lookingForChallengePrompt));
-    const prompt = screen.getByText(formatMessage(messages.exploreCoursesPrompt));
-    expect(heading).toBeInTheDocument();
-    expect(prompt).toBeInTheDocument();
+
+    expect(
+      screen.getByText(formatMessage(messages.lookingForChallengePrompt)),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText(formatMessage(messages.exploreCoursesPrompt)),
+    ).toBeInTheDocument();
   });
-  it('should display button', () => {
+
+  it('should display button with correct URL', () => {
     render(<IntlProvider locale="en"><EmptyCourse /></IntlProvider>);
-    const button = screen.getByRole('link', { name: formatMessage(messages.exploreCoursesButton) });
+
+    const button = screen.getByRole('link', {
+      name: formatMessage(messages.exploreCoursesButton),
+    });
+
     expect(button).toBeInTheDocument();
-    expect(button.href).toContain(`mock-base-app-url${courseSearchUrl}`);
+    expect(button).toHaveAttribute(
+      'href',
+      `mock-base-app-url${mockCourseSearchUrl}`,
+    );
   });
+
   it('should fire cohesion viewed event on load', () => {
     render(<IntlProvider locale="en"><EmptyCourse /></IntlProvider>);
-    expect(exploreCoursesViewedCohesion).toHaveBeenCalled();
+
+    expect(exploreCoursesViewedCohesion).toHaveBeenCalledWith(
+      'test-correlation-id',
+    );
   });
+
   it('should fire cohesion click event when explore courses CTA is clicked', () => {
     render(<IntlProvider locale="en"><EmptyCourse /></IntlProvider>);
-    const button = screen.getByRole('link', { name: formatMessage(messages.exploreCoursesButton) });
+
+    const button = screen.getByRole('link', {
+      name: formatMessage(messages.exploreCoursesButton),
+    });
+
     fireEvent.click(button);
-    expect(exploreCoursesClickedCohesion).toHaveBeenCalled();
+
+    expect(exploreCoursesClickedCohesion).toHaveBeenCalledWith(
+      'test-correlation-id',
+    );
   });
 });

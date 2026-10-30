@@ -3,20 +3,18 @@ import { getAppConfig } from '@openedx/frontend-base';
 import { useNoticesRedirectData } from './hooks';
 import { getNotices } from './api';
 
-jest.mock('@openedx/frontend-base', () => ({
-  getAppConfig: jest.fn(),
-}));
-
-jest.mock('./api', () => ({
-  getNotices: jest.fn(),
-}));
-
 jest.mock('@openedx/frontend-base', () => {
-  const { formatMessage: fn } = jest.requireActual('testUtils');
+  const actual = jest.requireActual('@openedx/frontend-base');
+  const { formatMessage } = jest.requireActual('@src/testUtils');
+
   return {
-    ...jest.requireActual('@openedx/frontend-base'),
+    ...actual,
+    getAppConfig: jest.fn(() => ({
+      LMS_BASE_URL: 'https://test-lms.example.com',
+      ENABLE_NOTICES: true,
+    })),
     useIntl: () => ({
-      formatMessage: fn,
+      formatMessage,
     }),
   };
 });
@@ -25,11 +23,22 @@ jest.mock('react-router-dom', () => ({
   redirect: jest.fn(),
 }));
 
+jest.mock('./api', () => ({
+  getNotices: jest.fn(),
+}));
+
+
 describe('useNoticesRedirectData', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    getAppConfig.mockReturnValue({ ENABLE_NOTICES: true });
-  });
+      jest.clearAllMocks();
+
+      getAppConfig.mockReturnValue({
+        LMS_BASE_URL: 'https://test-lms.example.com',
+        ENABLE_NOTICES: true,
+      });
+
+      getNotices.mockReset();
+    });
 
   it('should initialize with isRedirected set to false', () => {
     getAppConfig.mockReturnValueOnce({ ENABLE_NOTICES: false });

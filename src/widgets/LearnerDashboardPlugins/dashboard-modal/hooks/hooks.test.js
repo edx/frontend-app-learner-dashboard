@@ -1,9 +1,9 @@
 import { renderHook } from '@testing-library/react';
 
 import { useInitializeLearnerHome } from '@src/data/hooks';
-import { MockUseState } from '../../testUtils';
 import { modalCTAClicked } from '../../tracking/trackers/enterpriseDashboardModal';
 import * as hooks from './hooks';
+import { MockUseState } from '@src/testUtils';
 
 jest.mock('@src/data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),

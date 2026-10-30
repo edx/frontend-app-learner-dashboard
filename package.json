@@ -66,6 +66,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "prop-types": "15.8.1",
+    "react-error-boundary": "^6.1.6",
     "react-helmet": "^6.1.0",
     "react-intersection-observer": "^11.0.1",
     "react-share": "^5.2.2"

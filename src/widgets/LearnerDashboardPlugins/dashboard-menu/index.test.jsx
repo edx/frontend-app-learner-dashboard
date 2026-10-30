@@ -1,39 +1,52 @@
 import React from 'react';
-import { mergeConfig } from '@openedx/frontend-base';
-import { injectIntl, IntlProvider } from '@openedx/frontend-base';
-import {
-  screen,
-  render,
-} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { getAppConfig, useIntl } from '@openedx/frontend-base';
+import { useWindowSize } from '@openedx/paragon';
 
-import { useInitializeLearnerHome } from 'data/hooks';
-import UserDashboardMenu from './index'; // eslint-disable-line
+import { useInitializeLearnerHome } from '@src/data/hooks';
+import UserDashboardMenu from './index';
 
-jest.mock(
-  'data/hooks',
-  () => ({
-    useInitializeLearnerHome: jest.fn(() => ({
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
+  getAppConfig: jest.fn(),
+  useIntl: jest.fn(),
+}));
+
+jest.mock('@openedx/paragon', () => ({
+  ...jest.requireActual('@openedx/paragon'),
+  useWindowSize: jest.fn(),
+}));
+
+jest.mock('@src/data/hooks', () => ({
+  useInitializeLearnerHome: jest.fn(),
+}));
+
+describe('User Dashboard Menu', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    (getAppConfig).mockReturnValue({
+      ENABLE_EDX_PERSONAL_DASHBOARD: true,
+    });
+
+    (useIntl).mockReturnValue({
+      formatMessage: ({ defaultMessage }) => defaultMessage,
+    });
+
+    (useWindowSize).mockReturnValue({
+      width: 1200,
+    });
+
+    (useInitializeLearnerHome).mockReturnValue({
       data: {
         enterpriseDashboard: null,
         hasAvailableDashboards: false,
       },
-    })),
-  }),
-  { virtual: true },
-);
-mergeConfig({ ENABLE_EDX_PERSONAL_DASHBOARD: true });
-const IntlUserDashboardMenu = injectIntl(UserDashboardMenu);
-
-describe('User Dashboard Menu', () => {
-  const Wrapper = children => (
-    // eslint-disable-next-line react/jsx-filename-extension
-    <IntlProvider locale="en">
-      {children}
-    </IntlProvider>
-  );
+    });
+  });
 
   it('should render dashboard menu in the user menu dropdown', () => {
-    useInitializeLearnerHome.mockReturnValueOnce({
+    (useInitializeLearnerHome).mockReturnValue({
       data: {
         enterpriseDashboard: {
           url: 'url',
@@ -41,11 +54,40 @@ describe('User Dashboard Menu', () => {
         },
       },
     });
-    render(Wrapper(<IntlUserDashboardMenu />));
 
-    const dashboardSwitchMenu = screen.getByText('SWITCH DASHBOARD');
-    const dashboardMenu = screen.getByText('Personal');
-    expect(dashboardMenu).toBeTruthy();
-    expect(dashboardSwitchMenu).toBeTruthy();
+    render(<UserDashboardMenu />);
+
+    expect(screen.getByText('SWITCH DASHBOARD')).toBeInTheDocument();
+    expect(screen.getByText('Personal')).toBeInTheDocument();
+    expect(screen.getByText('test Dashboard')).toBeInTheDocument();
+  });
+
+  it('should render only personal dashboard when enterprise dashboard is unavailable', () => {
+    render(<UserDashboardMenu />);
+
+    expect(screen.getByText('Personal')).toBeInTheDocument();
+    expect(screen.queryByText('test Dashboard')).not.toBeInTheDocument();
+  });
+
+  it('should render mobile dashboard navigation', () => {
+    (useWindowSize).mockReturnValue({
+      width: 500,
+    });
+
+    render(<UserDashboardMenu />);
+
+    expect(screen.getByText('Personal')).toHaveClass('nav-link', 'active');
+    expect(screen.queryByText('SWITCH DASHBOARD')).not.toBeInTheDocument();
+  });
+
+  it('should not render dashboard menu when personal dashboard is disabled', () => {
+    (getAppConfig).mockReturnValue({
+      ENABLE_EDX_PERSONAL_DASHBOARD: false,
+    });
+
+    render(<UserDashboardMenu />);
+
+    expect(screen.queryByText('Personal')).not.toBeInTheDocument();
+    expect(screen.queryByText('SWITCH DASHBOARD')).not.toBeInTheDocument();
   });
 });

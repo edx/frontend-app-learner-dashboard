@@ -19,15 +19,16 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('@openedx/frontend-base', () => ({
-  getAppConfig: () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
+  getAppConfig: jest.fn(() => ({
     SITE_NAME: 'Test Site',
     AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: null,
-  }),
-}));
-
-jest.mock('@openedx/frontend-base', () => ({
-  getAuthenticatedUser: () => ({ username: 'testuser', fullName: 'Test User' }),
-  getAuthenticatedHttpClient: () => ({}),
+  })),
+  getAuthenticatedUser: jest.fn(() => ({
+    username: 'testuser',
+    fullName: 'Test User',
+  })),
+  getAuthenticatedHttpClient: jest.fn(() => ({})),
 }));
 
 jest.mock('../../hooks/useProgressiveProfilingForm');
