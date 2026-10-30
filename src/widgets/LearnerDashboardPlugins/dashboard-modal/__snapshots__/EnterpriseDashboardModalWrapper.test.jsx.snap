@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EnterpriseDashboardModalWrapper snapshot is not visible 1`] = `null`;
+
+exports[`EnterpriseDashboardModalWrapper snapshot is visible 1`] = `<EnterpriseDashboardModal />`;
