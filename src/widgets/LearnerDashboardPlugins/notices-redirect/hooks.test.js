@@ -27,18 +27,17 @@ jest.mock('./api', () => ({
   getNotices: jest.fn(),
 }));
 
-
 describe('useNoticesRedirectData', () => {
   beforeEach(() => {
-      jest.clearAllMocks();
+    jest.clearAllMocks();
 
-      getAppConfig.mockReturnValue({
-        LMS_BASE_URL: 'https://test-lms.example.com',
-        ENABLE_NOTICES: true,
-      });
-
-      getNotices.mockReset();
+    getAppConfig.mockReturnValue({
+      LMS_BASE_URL: 'https://test-lms.example.com',
+      ENABLE_NOTICES: true,
     });
+
+    getNotices.mockReset();
+  });
 
   it('should initialize with isRedirected set to false', () => {
     getAppConfig.mockReturnValueOnce({ ENABLE_NOTICES: false });
