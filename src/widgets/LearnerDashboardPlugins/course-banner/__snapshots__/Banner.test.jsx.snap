@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Banner matches snapshot 1`] = `
+<div>
+  <div
+    class="mb-0"
+    data-testid="alert"
+    data-variant="info"
+  >
+    Hello, world!
+  </div>
+</div>
+`;
+
 exports[`Banner snapshot renders default banner 1`] = `
 <Alert
   className="mb-0"
