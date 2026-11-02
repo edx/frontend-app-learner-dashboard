@@ -1,36 +1,42 @@
-// TODO: search for and remove all of these eslint lint disables now that it is disables in eslintrc
-/* eslint-disable import/no-named-as-default */
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import { Alert } from '@openedx/paragon';
-
 import Banner from './Banner';
 
 jest.mock('@openedx/paragon', () => ({
   ...jest.requireActual('@openedx/paragon'),
-  Alert: () => 'Alert',
+  Alert: ({ children, variant, ...props }) => (
+    <div data-testid="alert" data-variant={variant} {...props}>
+      {children}
+    </div>
+  ),
 }));
 
 describe('Banner', () => {
-  const props = {
-    children: 'Hello, world!',
-  };
-  describe('snapshot', () => {
-    test('renders default banner', () => {
-      const wrapper = shallow(<Banner {...props} />);
-      expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders default info banner', () => {
+    render(<Banner>Hello, world!</Banner>);
 
-      expect(wrapper.instance.findByType(Alert)[0].props.variant).toEqual('info');
-    });
-    test('renders with variants', () => {
-      const wrapper = shallow(<Banner {...props} variant="success" />);
-      expect(wrapper.snapshot).toMatchSnapshot();
+    expect(screen.getByText('Hello, world!')).toBeInTheDocument();
+    expect(screen.getByTestId('alert')).toHaveAttribute('data-variant', 'info');
+  });
 
-      expect(wrapper.instance.findByType(Alert)[0].props.variant).toEqual('success');
-    });
-    test('renders with custom class', () => {
-      const wrapper = shallow(<Banner {...props} className="custom-class" />);
-      expect(wrapper.snapshot).toMatchSnapshot();
-    });
+  it('renders success variant', () => {
+    render(<Banner variant="success">Hello, world!</Banner>);
+    expect(screen.getByTestId('alert')).toHaveAttribute('data-variant', 'success');
+  });
+
+  it('renders custom className', () => {
+    const { container } = render(
+      <Banner className="custom-class">Hello, world!</Banner>
+    );
+
+    expect(container.firstChild).toHaveClass('custom-class');
+  });
+
+  it('matches snapshot', () => {
+    const { container } = render(<Banner>Hello, world!</Banner>);
+    expect(container).toMatchSnapshot();
   });
 });
