@@ -12,6 +12,12 @@ const messages = defineMessages({
     description: 'Text for confirm unenroll modal',
     defaultMessage: 'Are you sure you want to unenroll from the course {courseTitle} ?',
   },
+  // TODO: Placeholder copy until Legal/Compliance provides the approved refund policy wording (LP-1395).
+  refundNotice: {
+    id: 'learner-dash.unenrollConfirm.confirm.refundNotice',
+    description: 'Notice in the confirm unenroll modal explaining that refunds are no longer automatic',
+    defaultMessage: 'Unenrolling does not automatically issue a refund. If you would like to request a refund for this course, please contact {supportEmail}.',
+  },
   confirmCancel: {
     id: 'learner-dash.unenrollConfirm.confirm.cancel',
     description: 'Cancel action for confirm unenroll modal',
