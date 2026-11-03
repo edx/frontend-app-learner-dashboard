@@ -6,6 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   ActionRow,
   Button,
+  MailtoLink,
 } from '@openedx/paragon';
 
 import messages from './messages';
@@ -17,11 +18,18 @@ export const ConfirmPane = ({
 }) => {
   const { formatMessage } = useIntl();
   const { courseName } = reduxHooks.useCardCourseData(cardId);
+  const { refundPolicyChangeEnabled, supportEmail } = reduxHooks.usePlatformSettingsData();
   const courseTitle = <span className="font-italic">“{courseName}”</span>;
+  const supportLink = <MailtoLink to={supportEmail}>{supportEmail}</MailtoLink>;
   return (
     <>
       <h4>{formatMessage(messages.confirmHeader)}</h4>
       <p className="py-2">{formatMessage(messages.confirmText, { courseTitle })}</p>
+      {refundPolicyChangeEnabled && (
+        <p className="pb-2" data-testid="refund-policy-notice">
+          {formatMessage(messages.refundNotice, { supportEmail: supportLink })}
+        </p>
+      )}
       <ActionRow>
         <Button variant="tertiary" onClick={handleClose}>
           {formatMessage(messages.confirmCancel)}
