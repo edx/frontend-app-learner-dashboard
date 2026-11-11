@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getAppConfig } from '@openedx/frontend-base';
+import { getAppConfig, getSiteConfig } from '@openedx/frontend-base';
 import { useIntl } from '@openedx/frontend-base';
 import { Hyperlink, Image } from '@openedx/paragon';
 
@@ -16,7 +16,7 @@ const SmallLayout = ({ enterpriseBranding }) => {
     || enterpriseBranding?.platformWelcomeString
     || '';
 
-  const siteName = getAppConfig().SITE_NAME;
+  const siteName = getSiteConfig().siteName;
   const baseLogoSrc = getAppConfig().LOGO_WHITE_URL || getAppConfig().LOGO_URL;
 
   return (

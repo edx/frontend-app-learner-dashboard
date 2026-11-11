@@ -1,4 +1,4 @@
-import { getAppConfig } from '@openedx/frontend-base';
+import { getSiteConfig } from '@openedx/frontend-base';
 import { getAuthenticatedHttpClient } from '@openedx/frontend-base';
 
 export default async function getThirdPartyAuthContext(urlParams) {
@@ -10,7 +10,7 @@ export default async function getThirdPartyAuthContext(urlParams) {
 
   const { data } = await getAuthenticatedHttpClient()
     .get(
-      `${getAppConfig().LMS_BASE_URL}/api/mfe_context`,
+      `${getSiteConfig().lmsBaseUrl}/api/mfe_context`,
       requestConfig,
     )
     .catch((e) => {

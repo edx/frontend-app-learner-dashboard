@@ -1,4 +1,4 @@
-import { getAppConfig, snakeCaseObject } from '@openedx/frontend-base';
+import { getSiteConfig, snakeCaseObject } from '@openedx/frontend-base';
 import { getAuthenticatedUser, getAuthenticatedHttpClient } from '@openedx/frontend-base';
 
 export async function saveProgressiveProfiling(values, extendedProfileFieldNames = []) {
@@ -23,7 +23,7 @@ export async function saveProgressiveProfiling(values, extendedProfileFieldNames
   }
 
   await client.patch(
-    `${getAppConfig().LMS_BASE_URL}/api/user/v1/accounts/${authenticatedUser.username}`,
+    `${getSiteConfig().lmsBaseUrl}/api/user/v1/accounts/${authenticatedUser.username}`,
     snakeCaseObject(payload),
     {
       headers: { 'Content-Type': 'application/merge-patch+json' },
