@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { useIntl } from '@openedx/frontend-base';
+import { getSiteConfig, useIntl } from '@openedx/frontend-base';
 import { getAppConfig } from '@openedx/frontend-base';
 import { getAuthenticatedUser, getAuthenticatedHttpClient } from '@openedx/frontend-base';
 import { identifyAuthenticatedUser } from '@openedx/frontend-base';
@@ -84,7 +84,7 @@ const ProgressiveProfilingPage = () => {
       <Helmet>
         <title>{formatMessage(
           messages['progressive.profiling.page.title'],
-          { siteName: getAppConfig().SITE_NAME },
+          { siteName: getSiteConfig().siteName },
         )}
         </title>
       </Helmet>

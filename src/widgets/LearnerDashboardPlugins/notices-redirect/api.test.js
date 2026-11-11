@@ -5,8 +5,8 @@ import * as api from './api';
 
 jest.mock('@openedx/frontend-base', () => ({
   ...jest.requireActual('@openedx/frontend-base'),
-  getAppConfig: jest.fn(() => ({
-    LMS_BASE_URL: 'test-lms-url',
+  getSiteConfig: jest.fn(() => ({
+    lmsBaseUrl: 'test-lms-url',
   })),
   getAuthenticatedHttpClient: jest.fn(),
   getAuthenticatedUser: jest.fn(),
