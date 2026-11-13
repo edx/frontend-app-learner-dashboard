@@ -6,8 +6,9 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   ActionRow,
   Button,
-  MailtoLink,
 } from '@openedx/paragon';
+
+import ContactUsLink from 'components/ContactUsLink';
 
 import messages from './messages';
 
@@ -18,16 +19,16 @@ export const ConfirmPane = ({
 }) => {
   const { formatMessage } = useIntl();
   const { courseName } = reduxHooks.useCardCourseData(cardId);
-  const { refundPolicyChangeEnabled, supportEmail } = reduxHooks.usePlatformSettingsData();
+  // True only when this course's order follows the new policy: unenrolling will not refund it automatically.
+  const { refundPolicyChangeApplies } = reduxHooks.useCardEnrollmentData(cardId);
   const courseTitle = <span className="font-italic">“{courseName}”</span>;
-  const supportLink = <MailtoLink to={supportEmail}>{supportEmail}</MailtoLink>;
   return (
     <>
       <h4>{formatMessage(messages.confirmHeader)}</h4>
       <p className="py-2">{formatMessage(messages.confirmText, { courseTitle })}</p>
-      {refundPolicyChangeEnabled && (
+      {refundPolicyChangeApplies && (
         <p className="pb-2" data-testid="refund-policy-notice">
-          {formatMessage(messages.refundNotice, { supportEmail: supportLink })}
+          {formatMessage(messages.refundNotice, { contactUsLink: <ContactUsLink /> })}
         </p>
       )}
       <ActionRow>

@@ -4,6 +4,9 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { reduxHooks } from 'hooks';
 import CertificateBanner from './CertificateBanner';
 
+jest.mock('data/services/lms/urls', () => ({
+  baseAppUrl: jest.fn((url) => `http://lms.test${url}`),
+}));
 jest.mock('hooks', () => ({
   utilHooks: {
     useFormatDate: jest.fn(() => date => date),
@@ -82,20 +85,17 @@ describe('CertificateBanner', () => {
     const msg = screen.getByText((text) => text.includes(supportEmail));
     expect(msg).toBeInTheDocument();
   });
-  it('is restricted with billing email but not verified', () => {
+  it('is restricted but not verified', () => {
     createWrapper({
       certificate: {
         isRestricted: true,
-      },
-      platformSettings: {
-        billingEmail,
       },
     });
     const banner = screen.getByRole('alert');
     expect(banner).toBeInTheDocument();
     expect(banner).toHaveClass('alert-danger');
-    const msg = screen.queryByText((text) => text.includes(billingEmail));
-    expect(msg).not.toBeInTheDocument();
+    expect(screen.queryByText((text) => text.includes('request a refund'))).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /Contact Us form/ })).not.toBeInTheDocument();
   });
   it('is restricted and verified', () => {
     createWrapper({
@@ -110,8 +110,11 @@ describe('CertificateBanner', () => {
     expect(banner).toBeInTheDocument();
     const restrictedMsg = screen.getByText((text) => text.includes('please let us know.'));
     expect(restrictedMsg).toBeInTheDocument();
-    const refundMsg = screen.getByText((text) => text.includes('If you would like a refund'));
-    expect(refundMsg).toBeInTheDocument();
+    expect(banner).toHaveTextContent(
+      'If you would like to request a refund for your certificate, contact us through our Contact Us form.',
+    );
+    expect(screen.getByRole('link', { name: /Contact Us form/ }))
+      .toHaveAttribute('href', 'http://lms.test/support/contact_us');
   });
   it('is restricted and verified with support email', () => {
     createWrapper({
@@ -127,29 +130,9 @@ describe('CertificateBanner', () => {
     });
     const restrictedMsg = screen.getByText((text) => text.includes(supportEmail));
     expect(restrictedMsg).toBeInTheDocument();
-    const refundMsg = screen.getByText((text) => text.includes('If you would like a refund'));
-    expect(refundMsg).toBeInTheDocument();
-    expect(refundMsg.innerHTML).not.toContain(billingEmail);
+    expect(screen.getByRole('link', { name: /Contact Us form/ })).toBeInTheDocument();
   });
-  it('is restricted and verified with billing email', () => {
-    createWrapper({
-      certificate: {
-        isRestricted: true,
-      },
-      enrollment: {
-        isVerified: true,
-      },
-      platformSettings: {
-        billingEmail,
-      },
-    });
-    const restrictedMsg = screen.queryByText((text) => text.includes('please let us know.'));
-    expect(restrictedMsg).toBeInTheDocument();
-    expect(restrictedMsg.innerHTML).not.toContain(supportEmail);
-    const refundMsg = screen.getByText((text) => text.includes(billingEmail));
-    expect(refundMsg).toBeInTheDocument();
-  });
-  it('is restricted and verified with support and billing email', () => {
+  it('does not send certificate refund requests to the billing email', () => {
     createWrapper({
       certificate: {
         isRestricted: true,
@@ -162,10 +145,7 @@ describe('CertificateBanner', () => {
         billingEmail,
       },
     });
-    const restrictedMsg = screen.getByText((text) => text.includes(supportEmail));
-    expect(restrictedMsg).toBeInTheDocument();
-    const refundMsg = screen.getByText((text) => text.includes(billingEmail));
-    expect(refundMsg).toBeInTheDocument();
+    expect(screen.queryByText((text) => text.includes(billingEmail))).not.toBeInTheDocument();
   });
   it('is passing and is downloadable', () => {
     createWrapper({

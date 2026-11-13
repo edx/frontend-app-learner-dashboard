@@ -9,8 +9,11 @@ import messages from './messages';
 jest.mock('hooks', () => ({
   reduxHooks: {
     useCardCourseData: jest.fn(() => ({ courseName: 'course name' })),
-    usePlatformSettingsData: jest.fn(() => ({})),
+    useCardEnrollmentData: jest.fn(() => ({})),
   },
+}));
+jest.mock('data/services/lms/urls', () => ({
+  baseAppUrl: jest.fn((url) => `http://lms.test${url}`),
 }));
 
 const props = {
@@ -18,16 +21,15 @@ const props = {
   handleClose: jest.fn().mockName('props.handleClose'),
   handleConfirm: jest.fn().mockName('props.handleConfirm'),
 };
-const supportEmail = 'support@example.com';
 
 const renderPane = () => render(<IntlProvider locale="en"><ConfirmPane {...props} /></IntlProvider>);
 
 describe('UnenrollConfirmModal ConfirmPane', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    reduxHooks.usePlatformSettingsData.mockReturnValue({});
+    reduxHooks.useCardEnrollmentData.mockReturnValue({});
   });
-  describe('refund policy change disabled', () => {
+  describe('order does not follow the refund policy change', () => {
     beforeEach(() => {
       renderPane();
     });
@@ -47,13 +49,21 @@ describe('UnenrollConfirmModal ConfirmPane', () => {
       expect(screen.queryByTestId('refund-policy-notice')).not.toBeInTheDocument();
     });
   });
-  describe('refund policy change enabled', () => {
-    it('renders the refund notice with a support email link', () => {
-      reduxHooks.usePlatformSettingsData.mockReturnValue({ refundPolicyChangeEnabled: true, supportEmail });
+  describe('order follows the refund policy change', () => {
+    it('renders the refund notice with a link to the Contact Us form', () => {
+      reduxHooks.useCardEnrollmentData.mockReturnValue({ refundPolicyChangeApplies: true });
       renderPane();
       const notice = screen.getByTestId('refund-policy-notice');
       expect(notice).toBeInTheDocument();
-      expect(screen.getByRole('link', { name: supportEmail })).toHaveAttribute('href', `mailto:${supportEmail}`);
+      expect(notice).toHaveTextContent('Unenrolling does not automatically issue a refund.');
+      expect(notice).toHaveTextContent('within 7 days of your purchase');
+      expect(screen.getByRole('link', { name: /Contact Us form/ }))
+        .toHaveAttribute('href', 'http://lms.test/support/contact_us');
+    });
+    it('does not link to an email address', () => {
+      reduxHooks.useCardEnrollmentData.mockReturnValue({ refundPolicyChangeApplies: true });
+      renderPane();
+      expect(screen.queryByRole('link', { name: /@/ })).not.toBeInTheDocument();
     });
   });
 });

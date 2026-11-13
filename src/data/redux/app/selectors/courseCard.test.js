@@ -247,6 +247,7 @@ describe('courseCard selectors module', () => {
         isAudit: 'test-is-audit',
         isAuditAccessExpired: 'test-is-audit-access-expired',
         isVerified: 'test-is-verified',
+        refundPolicyChangeApplies: 'test-refund-policy-change-applies',
         isEmailEnabled: 'test-is-email-enabled',
         mode: 'default',
       };
@@ -277,6 +278,9 @@ describe('courseCard selectors module', () => {
       });
       it('passes accessExpirationDate, converted to date', () => {
         expect(selected.accessExpirationDate).toEqual(new Date(testData.accessExpirationDate));
+      });
+      it('passes refundPolicyChangeApplies', () => {
+        expect(selected.refundPolicyChangeApplies).toEqual(testData.refundPolicyChangeApplies);
       });
       it('passes [canUpgrade, isAudit, isAuditAccessExpired, isVerified]', () => {
         expect(selected.canUpgrade).toEqual(testData.canUpgrade);
