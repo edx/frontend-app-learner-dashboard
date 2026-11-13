@@ -96,6 +96,7 @@ export const courseCard = StrictDict({
         isAudit: enrollment.isAudit,
         isAuditAccessExpired: enrollment.isAuditAccessExpired,
         isVerified: enrollment.isVerified,
+        refundPolicyChangeApplies: enrollment.refundPolicyChangeApplies,
 
         isEmailEnabled: enrollment.isEmailEnabled,
         hasOptedOutOfEmail: enrollment.hasOptedOutOfEmail,

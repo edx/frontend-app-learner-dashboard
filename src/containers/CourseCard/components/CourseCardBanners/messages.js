@@ -21,15 +21,10 @@ const messages = defineMessages({
     description: 'Restricted certificate warning message',
     defaultMessage: 'Your Certificate of Achievement is being held pending confirmation that the issuance of your Certificate is in compliance with strict U.S. embargoes on Iran, Cuba, Syria, and Sudan.  If you think our system has mistakenly identified you as being connected with one of those countries, please let us know.',
   },
-  certRefundContactBilling: {
-    id: 'learner-dash.courseCard.banners.certificateRefundContactBilling',
-    description: 'Message to learners to contact billing for certificate refunds',
-    defaultMessage: 'If you would like a refund on your Certificate of Achievement, please contact our billing address {billingEmail}',
-  },
-  certRefundContactBillingNoEmail: {
-    id: 'learner-dash.courseCard.banners.certificateRefundContactBillingNoEmail',
-    description: 'Message to learners to contact billing for certificate refunds',
-    defaultMessage: 'If you would like a refund on your Certificate of Achievement, please contact us.',
+  certRefundContactUs: {
+    id: 'learner-dash.courseCard.banners.certificateRefundContactUs',
+    description: 'Message to learners to request a certificate refund through the Contact Us form',
+    defaultMessage: 'If you would like to request a refund for your certificate, contact us through our {contactUsLink}.',
   },
   passingGrade: {
     id: 'learner-dash.courseCard.banners.passingGrade',
