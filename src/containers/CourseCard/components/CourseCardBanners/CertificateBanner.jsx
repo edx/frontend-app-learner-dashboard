@@ -8,6 +8,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { utilHooks, reduxHooks } from 'hooks';
 import Banner from 'components/Banner';
+import ContactUsLink from 'components/ContactUsLink';
 
 import messages from './messages';
 
@@ -22,7 +23,7 @@ export const CertificateBanner = ({ cardId }) => {
   const { isPassing } = reduxHooks.useCardGradeData(cardId);
   const { isArchived } = reduxHooks.useCardCourseRunData(cardId);
   const { minPassingGrade, progressUrl } = reduxHooks.useCardCourseRunData(cardId);
-  const { supportEmail, billingEmail } = reduxHooks.usePlatformSettingsData();
+  const { supportEmail } = reduxHooks.usePlatformSettingsData();
   const { formatMessage } = useIntl();
   const formatDate = useFormatDate();
 
@@ -33,7 +34,7 @@ export const CertificateBanner = ({ cardId }) => {
       <Banner variant="danger">
         { supportEmail ? formatMessage(messages.certRestricted, { supportEmail: emailLink(supportEmail) }) : formatMessage(messages.certRestrictedNoEmail)}
         {isVerified && '  '}
-        {isVerified && (billingEmail ? formatMessage(messages.certRefundContactBilling, { billingEmail: emailLink(billingEmail) }) : formatMessage(messages.certRefundContactBillingNoEmail))}
+        {isVerified && formatMessage(messages.certRefundContactUs, { contactUsLink: <ContactUsLink /> })}
       </Banner>
     );
   }

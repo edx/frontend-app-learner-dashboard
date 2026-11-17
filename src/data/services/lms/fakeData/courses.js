@@ -148,6 +148,7 @@ export const genEnrollmentData = (data = {}) => ({
   hasOptedOutOfEmail: false,
   isEnrolled: true,
   isVerified: false,
+  refundPolicyChangeApplies: false,
   ...data,
 });
 
