@@ -13,6 +13,9 @@ const siteConfig: SiteConfig = {
   logoutUrl: 'http://localhost:18000/logout',
 
   environment: EnvironmentTypes.DEVELOPMENT,
+  commonAppConfig: {
+    ENABLE_SUBSCRIPTION_SITE: true,
+  },
   apps: [
     shellApp,
     headerApp,
