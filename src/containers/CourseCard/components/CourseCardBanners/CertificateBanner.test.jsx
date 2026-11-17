@@ -110,11 +110,13 @@ describe('CertificateBanner', () => {
     expect(banner).toBeInTheDocument();
     const restrictedMsg = screen.getByText((text) => text.includes('please let us know.'));
     expect(restrictedMsg).toBeInTheDocument();
+    // The external link appends a screen-reader-only "in a new tab" label, so match the parts.
     expect(banner).toHaveTextContent(
-      'If you would like to request a refund for your certificate, contact us through our Contact Us form.',
+      /If you would like to request a refund for your certificate, contact us through our Contact Us form/,
     );
-    expect(screen.getByRole('link', { name: /Contact Us form/ }))
-      .toHaveAttribute('href', 'http://lms.test/support/contact_us');
+    const contactLink = screen.getByRole('link', { name: /Contact Us form/ });
+    expect(contactLink).toHaveAttribute('href', 'http://lms.test/support/contact_us');
+    expect(contactLink).toHaveAttribute('target', '_blank');
   });
   it('is restricted and verified with support email', () => {
     createWrapper({
