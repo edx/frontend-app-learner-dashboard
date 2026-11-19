@@ -1,5 +1,4 @@
-import { authenticatedLoader, homeRole, getAuthenticatedHttpClient, getAppConfig } from '@openedx/frontend-base';
-import { appId } from './constants';
+import { authenticatedLoader, homeRole, getAuthenticatedHttpClient } from '@openedx/frontend-base';
 import { redirect } from 'react-router-dom';
 
 import { dashboardRole } from './constants';
@@ -10,7 +9,7 @@ const subscriptionAccessLoader = async () => {
   try {
     const { data } = await getAuthenticatedHttpClient().get(getSubsInitApiUrl());
     
-    if (data.userSubscription && data.userSubscription.isSubscriber && getAppConfig(appId).ENABLE_SUBSCRIPTION_SITE) {
+    if (data.userSubscription && data.userSubscription.isSubscriber && data.subscriptionEnabled) {
       throw redirect('/subscription-learner-dashboard');  //redirect to subscription learner dashboard if user have subscription access
     }
   
