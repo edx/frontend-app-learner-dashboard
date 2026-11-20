@@ -7,7 +7,6 @@ import MasqueradeBar from './MasqueradeBar';
 import CoursesLink from './CoursesLink';
 import DiscoverLinkMenuItem from './DiscoverLinkMenuItem';
 import ProgramsLinkMenuItem from './ProgramsLinkMenuItem';
-import OrderHistoryLinkMenuItem from './OrderHistoryLinkMenuItem';
 
 const app: App = {
   appId: 'org.openedx.frontend.app.learnerDashboard.header',
@@ -64,21 +63,6 @@ const app: App = {
       }
     },
     helpButtonSlotOperation({ appId, role: dashboardRole }),
-    {
-      slotId: 'org.openedx.frontend.slot.header.authenticatedMenu.v1',
-      id: 'org.openedx.frontend.widget.learnerDashboard.headerLinkOrderHistory.v1',
-      op: WidgetOperationTypes.INSERT_BEFORE,
-      relatedId: 'org.openedx.frontend.widget.header.desktopAuthenticatedMenuLogout.v1',
-      element: (
-        <OrderHistoryLinkMenuItem
-          variant="navLink"
-        />
-      ),
-      condition: {
-        active: [dashboardRole],
-        callback: () => getAppConfig(appId).ORDER_HISTORY_URL ? true : false,
-      }
-    },
     {
       slotId: 'org.openedx.frontend.slot.header.main.v1',
       id: 'org.openedx.frontend.widget.learnerDashboard.headerMasqueradeBar.v1',

@@ -9,7 +9,7 @@ const subscriptionAccessLoader = async () => {
   try {
     const { data } = await getAuthenticatedHttpClient().get(getSubsInitApiUrl());
     
-    if (data.userSubscription && data.userSubscription.isSubscriber) {
+    if (data.userSubscription && data.userSubscription.isSubscriber && data.subscriptionEnabled) {
       throw redirect('/subscription-learner-dashboard');  //redirect to subscription learner dashboard if user have subscription access
     }
   
