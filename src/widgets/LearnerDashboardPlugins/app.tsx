@@ -4,7 +4,6 @@ import UpgradeButton from './upgrade-button/UpgradeButton';
 import UclWrapper from './ucl-wrapper/index';
 import ProgressiveProfilingEntry from './progressive-profiling-dashboard/ProgressiveProfilingModal';
 import useNoticesRedirectData from './notices-redirect';
-import NoCoursesView from './no-courses-view';
 import EnterpriseDashboardModalWrapper from './dashboard-modal';
 import UserDashboardMenu from './dashboard-menu';
 import CourseBanner from './course-banner';
@@ -32,12 +31,6 @@ const app: App = {
       id: 'org.openedx.frontend.widget.learnerDashboard.progressiveProfilingEntry.v1',
       op: WidgetOperationTypes.PREPEND,
       component: ProgressiveProfilingEntry,
-    },
-    {
-      slotId: 'org.openedx.frontend.slot.learnerDashboard.noCoursesView.v1',
-      id: 'org.openedx.frontend.widget.learnerDashboard.noCoursesView.v1',
-      op: WidgetOperationTypes.PREPEND,
-      component: NoCoursesView,
     },
     {
       slotId: 'org.openedx.frontend.slot.learnerDashboard.enterpriseDashboardModal.v1',
